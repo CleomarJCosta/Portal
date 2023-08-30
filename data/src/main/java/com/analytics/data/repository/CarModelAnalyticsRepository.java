@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 @Repository
-public interface CarModelAnalyticsRepository extends JpaRepository<CarModelAnalyticsRepository, Long> {
+public interface CarModelAnalyticsRepository extends JpaRepository<CarModelAnalyticsEntity, Long> {
     Optional<CarModelAnalyticsEntity> findByModel(String model);
 }

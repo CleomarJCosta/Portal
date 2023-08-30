@@ -29,13 +29,21 @@ public class PostAnalyticsServiceImpl implements PostAnalyticsService{
         CarModelPriceEntity carModelPriceEntity = new CarModelPriceEntity();
         carModelPriceEntity.setModel(model);
         carModelPriceEntity.setPrice(price);
-        carPriceAnalyticsRepository.save(carPriceAnalyticsRepository);
+        carPriceAnalyticsRepository.save(carModelPriceEntity);
     }
 
-    private void saveCarModelAnalytics(String model) {
+    private void saveCarModelAnalytics(String carModel) {
         CarModelAnalyticsEntity carModelAnalyticsEntity = new CarModelAnalyticsEntity();
-        carModelAnalyticsEntity.setModel(model);
-        carModelAnalyticsRepository.save(carModelAnalyticsRepository);
+
+        carModelAnalyticsRepository.findByModel(carModel).ifPresentOrElse(item ->{
+            item.setPosts(item.getPosts() + 1);
+            carModelAnalyticsRepository.save(item);
+        }, ()->{
+            carModelAnalyticsEntity.setModel(carModel);
+            carModelAnalyticsEntity.setPosts(1L);
+            carModelAnalyticsRepository.save(carModelAnalyticsEntity);
+
+        });
 
     }
 
